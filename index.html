@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>mow</title>
+  <title>cool cat</title>
 
   <style>
     body {
@@ -22,6 +22,17 @@
       color: black;
       font-size: 80px;
       margin-bottom: 20px;
+      font-weight: normal;
+      text-transform: lowercase;
+    }
+
+    #meowText {
+      font-family: Arial, sans-serif;
+      font-weight: 100;
+      font-size: 28px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     img {
@@ -39,7 +50,9 @@
 </head>
 <body>
 
-  <h1>mow</h1>
+  <h1>cool cat</h1>
+
+  <div id="meowText">meow</div>
 
   <img
     id="cat"
@@ -48,6 +61,7 @@
 
   <script>
     const cat = document.getElementById("cat");
+    const meowText = document.getElementById("meowText");
 
     const original =
       "https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=1080&crop=smart&auto=webp&s=4c576b018dd510ee742502d4c71a5f796262d558";
@@ -62,6 +76,14 @@
 
       busy = true;
 
+      // show meow
+      meowText.style.opacity = "1";
+
+      setTimeout(() => {
+        meowText.style.opacity = "0";
+      }, 800);
+
+      // fade out
       cat.style.opacity = "0";
 
       setTimeout(() => {
