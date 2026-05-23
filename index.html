@@ -1,50 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>cool cat</title>
 
   <style>
     body {
       margin: 0;
       height: 100vh;
+      background: #ffffff;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background: white;
       overflow: hidden;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     h1 {
+      font-size: 88px;
+      font-weight: 900;
+      letter-spacing: -4px;
+      margin: 0 0 10px 0;
       color: black;
-      font-size: 80px;
-      margin-bottom: 10px;
-      font-weight: normal;
-      text-transform: lowercase;
+      user-select: none;
     }
 
-    #meowText {
-      font-family: Arial, sans-serif;
-      font-weight: 100;
-      font-size: 28px;
-      margin-bottom: 15px;
+    #meow {
+      height: 30px;
+      font-size: 26px;
+      font-weight: 300;
       opacity: 0;
-      transition: opacity 0.1s linear;
+      transition: opacity 0.05s linear;
+      margin-bottom: 12px;
+      user-select: none;
     }
 
-    img {
-      width: 350px;
-      border-radius: 20px;
+    #cat {
+      width: 360px;
+      border-radius: 24px;
       cursor: pointer;
-      transition: opacity 0.15s ease, transform 0.15s ease;
-      opacity: 1;
+      transition:
+        transform 0.08s ease,
+        filter 0.08s ease;
+      user-select: none;
     }
 
-    img:hover {
+    #cat:hover {
       transform: scale(1.02);
+    }
+
+    #cat:active {
+      transform: scale(0.98);
+      filter: brightness(1.1);
     }
   </style>
 </head>
@@ -52,7 +61,7 @@
 
   <h1>cool cat</h1>
 
-  <div id="meowText">meow</div>
+  <div id="meow">meow</div>
 
   <img
     id="cat"
@@ -61,42 +70,31 @@
 
   <script>
     const cat = document.getElementById("cat");
-    const meowText = document.getElementById("meowText");
+    const meow = document.getElementById("meow");
 
-    const original =
+    const normal =
       "https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=1080&crop=smart&auto=webp&s=4c576b018dd510ee742502d4c71a5f796262d558";
 
-    const gif =
+    const funny =
       "https://media1.tenor.com/m/i_QvXP4bgecAAAAd/cat-cat-meme.gif";
 
-    let busy = false;
-
     cat.addEventListener("click", () => {
-      if (busy) return;
 
-      busy = true;
+      // instant text
+      meow.style.opacity = "1";
 
-      // instant meow
-      meowText.style.opacity = "1";
+      // instant image
+      cat.src = funny;
 
-      // instant image switch
-      cat.src = gif;
-
+      // hide text super fast
       setTimeout(() => {
-        meowText.style.opacity = "0";
-      }, 250);
+        meow.style.opacity = "0";
+      }, 120);
 
-      // switch back faster
+      // switch image back VERY fast
       setTimeout(() => {
-        cat.style.opacity = "0";
-
-        setTimeout(() => {
-          cat.src = original;
-          cat.style.opacity = "1";
-          busy = false;
-        }, 120);
-
-      }, 700);
+        cat.src = normal;
+      }, 170);
     });
   </script>
 
