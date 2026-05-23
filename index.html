@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MOW</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>mow</title>
 
   <style>
     body {
@@ -13,27 +13,27 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background: black;
+      background: white;
       overflow: hidden;
       font-family: Arial, sans-serif;
     }
 
     h1 {
-      color: white;
+      color: black;
       font-size: 80px;
       margin-bottom: 20px;
-      text-shadow: 0 0 20px white;
     }
 
     img {
       width: 350px;
       border-radius: 20px;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: opacity 0.5s ease, transform 0.2s ease;
+      opacity: 1;
     }
 
     img:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
   </style>
 </head>
@@ -49,16 +49,37 @@
   <script>
     const cat = document.getElementById("cat");
 
-    let clicked = false;
+    const original =
+      "https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=1080&crop=smart&auto=webp&s=4c576b018dd510ee742502d4c71a5f796262d558";
+
+    const gif =
+      "https://media1.tenor.com/m/i_QvXP4bgecAAAAd/cat-cat-meme.gif";
+
+    let busy = false;
 
     cat.addEventListener("click", () => {
-      if (!clicked) {
-        cat.src = "https://media1.tenor.com/m/i_QvXP4bgecAAAAd/cat-cat-meme.gif";
-        clicked = true;
-      } else {
-        cat.src = "https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=1080&crop=smart&auto=webp&s=4c576b018dd510ee742502d4c71a5f796262d558";
-        clicked = false;
-      }
+      if (busy) return;
+
+      busy = true;
+
+      cat.style.opacity = "0";
+
+      setTimeout(() => {
+        cat.src = gif;
+        cat.style.opacity = "1";
+
+        setTimeout(() => {
+          cat.style.opacity = "0";
+
+          setTimeout(() => {
+            cat.src = original;
+            cat.style.opacity = "1";
+            busy = false;
+          }, 500);
+
+        }, 1000);
+
+      }, 500);
     });
   </script>
 
