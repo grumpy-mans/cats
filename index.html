@@ -9,7 +9,7 @@
     body {
       margin: 0;
       height: 100vh;
-      background: #ffffff;
+      background: white;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,12 +25,13 @@
       margin: 0 0 10px 0;
       color: black;
       user-select: none;
+      text-transform: lowercase;
     }
 
     #meow {
       height: 30px;
       font-size: 26px;
-      font-weight: 300;
+      font-weight: 100;
       opacity: 0;
       transition: opacity 0.05s linear;
       margin-bottom: 12px;
@@ -86,15 +87,12 @@
       // instant image
       cat.src = funny;
 
-      // hide text super fast
+      // text + image disappear together
       setTimeout(() => {
         meow.style.opacity = "0";
-      }, 120);
-
-      // switch image back VERY fast
-      setTimeout(() => {
         cat.src = normal;
       }, 170);
+
     });
   </script>
 
