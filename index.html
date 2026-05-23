@@ -15,36 +15,36 @@
       align-items: center;
       flex-direction: column;
       overflow: hidden;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Arial Narrow", Arial, sans-serif;
     }
 
     h1 {
       font-size: 88px;
       font-weight: 900;
-      letter-spacing: -4px;
+      letter-spacing: -3px;
       margin: 0 0 10px 0;
       color: black;
       user-select: none;
       text-transform: lowercase;
+      font-family: "Arial Narrow", Arial, sans-serif;
     }
 
     #meow {
-      height: 3px;
+      height: 30px;
       font-size: 26px;
       font-weight: 100;
       opacity: 0;
       transition: opacity 0.05s linear;
       margin-bottom: 12px;
       user-select: none;
+      font-family: "Arial Narrow", Arial, sans-serif;
     }
 
     #cat {
       width: 360px;
       border-radius: 24px;
       cursor: pointer;
-      transition:
-        transform 0.08s ease,
-        filter 0.08s ease;
+      transition: transform 0.08s ease, filter 0.08s ease;
       user-select: none;
     }
 
@@ -81,17 +81,13 @@
 
     cat.addEventListener("click", () => {
 
-      // instant text
       meow.style.opacity = "1";
-
-      // instant image
       cat.src = funny;
 
-      // text + image disappear together
       setTimeout(() => {
         meow.style.opacity = "0";
         cat.src = normal;
-      }, 101);
+      }, 530);
 
     });
   </script>
