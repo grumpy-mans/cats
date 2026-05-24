@@ -18,42 +18,59 @@
       font-family: "Arial Narrow", Arial, sans-serif;
     }
 
+    #score {
+      font-size: 22px;
+      margin-bottom: 10px;
+      font-weight: 300;
+    }
+
     #meow {
       font-size: 26px;
-      font-weight: 100;
       opacity: 0;
       transition: opacity 0.05s linear;
-      margin-bottom: 12px;
-      user-select: none;
-      font-family: "Arial Narrow", Arial, sans-serif;
+      margin-bottom: 10px;
     }
 
     #cat {
       width: 360px;
       border-radius: 24px;
       cursor: pointer;
-      transition: transform 0.08s ease, filter 0.08s ease;
       user-select: none;
+      transition: transform 0.15s ease;
     }
 
-    #cat:active {
-      transform: scale(0.98);
-      filter: brightness(1.1);
+    .bounce {
+      animation: bounce 0.25s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.15); }
+      60% { transform: scale(0.95); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
+
 <body>
 
+  <div id="score">meows: 0</div>
   <div id="meow">meow</div>
 
-  <img
-    id="cat"
+  <img id="cat"
     src="https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=1080&crop=smart&auto=webp&s=4c576b018dd510ee742502d4c71a5f796262d558"
   >
+
+  <!-- REAL SOUND -->
+  <audio id="meowSound" src="meow.mp3" preload="auto"></audio>
 
   <script>
     const cat = document.getElementById("cat");
     const meow = document.getElementById("meow");
+    const scoreText = document.getElementById("score");
+    const sound = document.getElementById("meowSound");
+
+    let score = 0;
 
     const normal =
       "https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=1080&crop=smart&auto=webp&s=4c576b018dd510ee742502d4c71a5f796262d558";
@@ -61,37 +78,28 @@
     const funny =
       "https://media1.tenor.com/m/i_QvXP4bgecAAAAd/cat-cat-meme.gif";
 
-    function playMeowSound() {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-
-      const oscillator = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(700, ctx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.2);
-
-      gain.gain.setValueAtTime(0.2, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-
-      oscillator.connect(gain);
-      gain.connect(ctx.destination);
-
-      oscillator.start();
-      oscillator.stop(ctx.currentTime + 0.25);
-    }
-
     cat.addEventListener("click", () => {
 
-      // visual meow text
+      // score
+      score++;
+      scoreText.textContent = "meows: " + score;
+
+      // bounce
+      cat.classList.remove("bounce");
+      void cat.offsetWidth;
+      cat.classList.add("bounce");
+
+      // text
       meow.style.opacity = "1";
 
-      // sound meow
-      playMeowSound();
-
-      // gif swap
+      // image swap
       cat.src = funny;
 
+      // REAL SOUND
+      sound.currentTime = 0;
+      sound.play();
+
+      // reset
       setTimeout(() => {
         meow.style.opacity = "0";
         cat.src = normal;
