@@ -19,7 +19,6 @@
     }
 
     #meow {
-      height: 30px;
       font-size: 26px;
       font-weight: 100;
       opacity: 0;
@@ -35,10 +34,6 @@
       cursor: pointer;
       transition: transform 0.08s ease, filter 0.08s ease;
       user-select: none;
-    }
-
-    #cat:hover {
-      transform: scale(1.02);
     }
 
     #cat:active {
@@ -66,9 +61,35 @@
     const funny =
       "https://media1.tenor.com/m/i_QvXP4bgecAAAAd/cat-cat-meme.gif";
 
+    function playMeowSound() {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(700, ctx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.2);
+
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+
+      oscillator.connect(gain);
+      gain.connect(ctx.destination);
+
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + 0.25);
+    }
+
     cat.addEventListener("click", () => {
 
+      // visual meow text
       meow.style.opacity = "1";
+
+      // sound meow
+      playMeowSound();
+
+      // gif swap
       cat.src = funny;
 
       setTimeout(() => {
