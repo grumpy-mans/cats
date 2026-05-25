@@ -49,6 +49,23 @@
       60% { transform: scale(0.95); }
       100% { transform: scale(1); }
     }
+
+    #resetBtn {
+      margin-top: 18px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 14px;
+      background: black;
+      color: white;
+      font-size: 18px;
+      font-family: "Arial Narrow", Arial, sans-serif;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    #resetBtn:active {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 
@@ -61,7 +78,9 @@
     src="https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=1080&crop=smart&auto=webp&s=4c576b018dd510ee742502d4c71a5f796262d558"
   >
 
-  <!-- REAL SOUND -->
+  <button id="resetBtn">reset</button>
+
+  <!-- SOUND -->
   <audio id="meowSound" src="meow.mp3" preload="auto"></audio>
 
   <script>
@@ -69,8 +88,18 @@
     const meow = document.getElementById("meow");
     const scoreText = document.getElementById("score");
     const sound = document.getElementById("meowSound");
+    const resetBtn = document.getElementById("resetBtn");
 
-    let score = 0;
+    // LOAD SAVE
+    let score = localStorage.getItem("meowScore");
+
+    if (score === null) {
+      score = 0;
+    } else {
+      score = parseInt(score);
+    }
+
+    scoreText.textContent = "meows: " + score;
 
     const normal =
       "https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=1080&crop=smart&auto=webp&s=4c576b018dd510ee742502d4c71a5f796262d558";
@@ -80,31 +109,47 @@
 
     cat.addEventListener("click", () => {
 
-      // score
+      // ADD SCORE
       score++;
+
+      // SAVE SCORE
+      localStorage.setItem("meowScore", score);
+
+      // UPDATE TEXT
       scoreText.textContent = "meows: " + score;
 
-      // bounce
+      // BOUNCE
       cat.classList.remove("bounce");
       void cat.offsetWidth;
       cat.classList.add("bounce");
 
-      // text
+      // MEOW TEXT
       meow.style.opacity = "1";
 
-      // image swap
+      // IMAGE SWAP
       cat.src = funny;
 
-      // REAL SOUND
-           sound.currentTime = 0;
+      // SOUND
+      sound.currentTime = 0;
       sound.playbackRate = 2.0;
       sound.play();
 
-      // reset
+      // RESET IMAGE/TEXT
       setTimeout(() => {
         meow.style.opacity = "0";
         cat.src = normal;
       }, 530);
+
+    });
+
+    // RESET BUTTON
+    resetBtn.addEventListener("click", () => {
+
+      score = 0;
+
+      localStorage.setItem("meowScore", score);
+
+      scoreText.textContent = "meows: 0";
 
     });
   </script>
